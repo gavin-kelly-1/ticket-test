@@ -1,0 +1,17 @@
+name: BABS project actions
+description: Launch one of the BABS project admin processors
+runs:
+  using: node20
+  main: dist/index.js
+branding:
+  icon: alert-circle
+  color: gray-dark
+inputs:
+  action:
+    description: >-
+      the action to be launched
+      (create-issues/check-blockers/issue-to-readme/flag-when-assigned)
+    required: true
+  myToken:
+    description: github token
+    required: true

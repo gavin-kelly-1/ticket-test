@@ -1,0 +1,56 @@
+{
+    "issues" :[
+	{"title": "Acknowledge request",
+	 "body": "First contact with the scientist to let them know it's on the queue, with perhaps some first-pass thoughts on their problem.",
+         "bodyFile": "babs/docs/initial_info.md",
+	 "milestone": "Planning",
+	 "labels": ["Management"],
+	 "assignees": ["macroscian"]}
+	,
+	{"title": "Allocate",
+	 "body": "Ensure that someone has taken on responsibility for scoping the question",
+	 "milestone": "Planning",
+	 "labels": ["Management"],
+	 "deps":["Acknowledge request"],
+	 "assignees": ["macroscian"]}
+	,
+	{"title": "Scope work",
+	 "body": " - [ ] If the question is briefly answerable, reply and close this issue when the scientist has been answered.\n - [ ] If it's for ongoing support, open an 'Ongoing Support' issue.\n - [ ] If it's a small amount of work, open a task issue.\n - [ ] If it's a large piece of work, ask the scientist to write a proposal, and open a 'BABS Approval' issue",
+	 "milestone": "Planning",
+	 "labels": ["Management"],
+	 "assignees": [],
+	 "deps":["Allocate"]}
+    ],
+    "milestones": [
+	{"title": "Planning",
+	 "description": "From ticket to approval."
+	},
+	{"title": "Analysis",
+	 "description": "Work associated with achieving the analytic aims."
+	}
+    ],
+    "labels": [
+	{"name": "Blocked",
+	 "color": "000000",
+	 "description": "This topic has unresolved dependencies."
+	},
+	{"name": "BABS Work Package",
+	 "color": "94CEF2",
+	 "description": "An agreed package of work."
+	},
+	{"name": "BABS Task",
+	 "color": "76b82a",
+	 "description": "Task that lives outside a work package."
+	},
+	{"name": "Live",
+	 "color": "d73a4a",
+	 "description": "Not blocked."
+	},
+	{"name": "Reassigned",
+	 "color": "fef2c0",
+	 "description": "Temporary label flagging a change in assignment"},
+	{"name": "Management",
+	 "color": "ededed",
+	 "description": "Might have aspects that involve the management team"}
+    ]
+}

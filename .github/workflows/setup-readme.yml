@@ -1,0 +1,41 @@
+on:
+  push:
+    paths:
+      - .babs
+  workflow_dispatch:
+name: Update README with metadata
+permissions:
+  contents: write
+jobs:
+  render:
+    name: Render readme.md
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: direct
+        run: |
+          babs () { yq -r ".[].$1" .babs;}
+          cat <<EOF > bot_tmp_para.txt
+          ## $(babs Project)
+          This is a project for $(babs Scientist) in the $(babs Lab) Lab.
+          
+          The initial ticket was created on $(babs Created) and has an estimate
+          of $(babs Estimate) hours, to be charged against code $(babs Code).
+          
+          It is classed as $(babs Type), and has BABS reference $(babs Hash).
+          
+          You can find the project proposal document [here](babs/proposal.docx).
+          EOF
+          lead='<!--BABSSTART-->'
+          tail='<!--BABSEND-->'
+          sed -e "/$lead/,/$tail/{ /$lead/{p; r bot_tmp_para.txt
+          }; /$tail/p; d }"  readme.md > bot_tmp_readme.txt
+          mv bot_tmp_readme.txt readme.md
+          rm -f bot_tmp_para.txt bot_tmp_readme.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add readme.md
+          git commit -m "babs-o-matic updated readme to reflect .babs changes"
+          git push

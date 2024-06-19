@@ -1,0 +1,38 @@
+name: Convert proposal.docx
+
+# when a commit includes a proposal.docx file
+on:
+  push:
+    paths:
+      - 'babs/docs/proposal.docx'
+  workflow_dispatch:
+
+# set up environment variables
+env:
+  INPUT_FILE: 'babs/docs/proposal.docx'
+  OUTPUT_FILE: 'babs/docs/proposal.md'
+  OUTPUT_FORMAT: 'gfm'
+
+# define the work to be done
+jobs:
+  convert-proposal-document:
+    runs-on: ubuntu-latest
+  
+    steps:
+      - name: checkout the repo
+        uses: actions/checkout@v4
+      - name: run pandoc
+        uses: docker://pandoc/core:2.9
+        if: ${{ hashFiles(env.INPUT_FILE) != '' }}
+        with:
+          args: "--to ${{ env.OUTPUT_FORMAT }} --output ${{ env.OUTPUT_FILE }} ${{ env.INPUT_FILE }}" # gets appended to pandoc command
+      - name: commit converted proposal
+        if: ${{ hashFiles(env.INPUT_FILE) != '' }}
+        run: |
+          git branch --all
+          git remote --verbose
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ${OUTPUT_FILE}
+          git commit -m "babs-o-matic converted proposal.docx to markdown"
+          git push origin HEAD:main

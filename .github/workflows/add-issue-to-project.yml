@@ -1,0 +1,30 @@
+name: Create and/or Update edited issues to my project
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  create-update-project:
+    name: Create/update project issue
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'Management') && contains(github.event.repository.repositoryTopics, 'statistics')
+    env:
+          GH_TOKEN: ${{ secrets.STATS_PROJECT }}
+          ORGANIZATION: BABS-STP
+          PROJECT_NUMBER: 39
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/add-to-project@v0.3.0 # This adds the issue to the project
+        with:
+          project-url: https://github.com/orgs/${{ env.ORGANIZATION }}/projects/${{ env.PROJECT_NUMBER }}
+          github-token: ${{ secrets.STATS_SECRET }}
+        id: add-project
+      - uses: titoportas/update-project-fields@v0.2.0
+        with:
+          project-url: https://github.com/orgs/${{ env.ORGANIZATION }}/projects/${{ env.PROJECT_NUMBER }}
+          github-token: ${{ secrets.STATS_SECRET }}
+          item-id: ${{ steps.add-project.outputs.itemId }} # Use the item-id output of the previous step
+          field-keys: Status,Ticket Date,Active Since,Completed,Name,Scientist,Lab,Project Type,Code
+          field-values:  ${{ contains(github.event.issue.labels.*.name, 'Blocked') && 'Blocked' || 'Todo' }},${{ vars.BABS_Created }},${{ ! contains(github.event.issue.labels.*.name, 'Blocked') && vars.BABS_Created || ""  }},"",${{ vars.BABS_Project }},${{ vars.BABS_Scientist }},${{ vars.BABS_Lab }},${{ vars.BABS_Type }},${{ vars.BABS_Code }}

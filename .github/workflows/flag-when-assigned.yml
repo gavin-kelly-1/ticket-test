@@ -1,0 +1,17 @@
+name: Flag as changed
+permissions:
+  contents: read
+  issues: write 
+on:
+  issues:
+    types: [assigned, unassigned]
+jobs:
+  flag:
+    runs-on: ubuntu-latest
+    name: flag
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/
+        with:
+          action: flag-when-assigned
+          myToken: ${{ secrets.GITHUB_TOKEN }}
