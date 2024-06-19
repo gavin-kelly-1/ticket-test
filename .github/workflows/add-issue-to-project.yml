@@ -9,7 +9,7 @@ jobs:
   create-update-project:
     name: Create/update project issue
     runs-on: ubuntu-latest
-    if: contains(github.event.issue.labels.*.name, 'Management') && contains(github.event.repository.repositoryTopics, 'statistics')
+#    if: contains(github.event.issue.labels.*.name, 'Management') && contains(github.event.repository.repositoryTopics, 'statistics')
     env:
           GH_TOKEN: ${{ secrets.STATS_PROJECT }}
           ORGANIZATION: BABS-STP
@@ -21,7 +21,7 @@ jobs:
           project-url: https://github.com/orgs/${{ env.ORGANIZATION }}/projects/${{ env.PROJECT_NUMBER }}
           github-token: ${{ secrets.STATS_SECRET }}
         id: add-project
-      - uses: titoportas/update-project-fields@v0.2.0
+      - uses: titoportas/update-project-fields@v0.1.0
         with:
           project-url: https://github.com/orgs/${{ env.ORGANIZATION }}/projects/${{ env.PROJECT_NUMBER }}
           github-token: ${{ secrets.STATS_SECRET }}
