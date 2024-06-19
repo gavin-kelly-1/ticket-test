@@ -9,9 +9,10 @@ jobs:
   create-update-project:
     name: Create/update project issue
     runs-on: ubuntu-latest
-#    if: contains(github.event.issue.labels.*.name, 'Management') && contains(github.event.repository.repositoryTopics, 'statistics')
+    if: contains(github.event.issue.labels.*.name, 'Management')
+#&& contains(github.event.repository.repositoryTopics, 'statistics')
     env:
-          GH_TOKEN: ${{ secrets.STATS_PROJECT }}
+          GH_TOKEN: ${{ secrets.STATS_SECRET }}
           ORGANIZATION: BABS-STP
           PROJECT_NUMBER: 39
     steps:
