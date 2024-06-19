@@ -9,7 +9,6 @@ jobs:
   create-update-project:
     name: Create/update project issue
     runs-on: ubuntu-latest
-    if: contains(github.event.issue.labels.*.name, 'Management') && contains(github.event.repository.repositoryTopics, 'statistics')
     env:
           GH_TOKEN: ${{ secrets.STATS_PROJECT }}
           ORGANIZATION: BABS-STP
