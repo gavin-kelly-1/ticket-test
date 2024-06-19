@@ -27,4 +27,4 @@ jobs:
           github-token: ${{ secrets.STATS_SECRET }}
           item-id: ${{ steps.add-project.outputs.itemId }} # Use the item-id output of the previous step
           field-keys: Status,Ticket Date,Active Since,Completed,Name,Scientist,Lab,Project Type,Code
-          field-values:  ${{ contains(github.event.issue.labels.*.name, 'Blocked') && 'Blocked' || 'Todo' }},${{ vars.BABS_Created }},${{ ! contains(github.event.issue.labels.*.name, 'Blocked') && vars.BABS_Created || ""  }},"",${{ vars.BABS_Project }},${{ vars.BABS_Scientist }},${{ vars.BABS_Lab }},${{ vars.BABS_Type }},${{ vars.BABS_Code }}
+          field-values:  ${{ contains(github.event.issue.labels.*.name, 'Blocked') && 'Blocked' || 'Todo' }},${{ vars.BABS_Created }},${{ ! contains(github.event.issue.labels.*.name, 'Blocked') && vars.BABS_Created || null  }},null,${{ vars.BABS_Project }},${{ vars.BABS_Scientist }},${{ vars.BABS_Lab }},${{ vars.BABS_Type }},${{ vars.BABS_Code }}
