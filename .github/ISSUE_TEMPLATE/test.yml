@@ -1,0 +1,23 @@
+name: Coaching Session
+description: An individual coaching session
+title: Coaching Session
+labels: ['coaching session']
+assignees: ["@me"]
+
+body:
+  - type: dropdown
+    attributes:
+      label: Hours
+      description: How many hours, including preparation, did this session take.
+      multiple: false
+      options:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      default: 1
+  - type: textarea
+    attributes:
+      label: Notes
+      description: Any extra information you'd like to record about the session
